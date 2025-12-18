@@ -65,8 +65,8 @@ fi
 
 section "Cloning and Configuring Dotfiles"
 
-DOTFILES_DIR=~/tools/dotfiles
-TOOLS_DIR=~/tools
+DOTFILES_DIR="/home/$USER/tools/dotfiles"
+TOOLS_DIR="/home/$USER/tools"
 
 mkdir -p "$TOOLS_DIR"
 cd "$TOOLS_DIR"
@@ -86,11 +86,11 @@ success "Dotfiles cloned to $DOTFILES_DIR"
 
 section "Configuring Wallpapers"
 
-WALLPAPERS_DIR=~/Desktop/wallpapers
+WALLPAPERS_DIR="/home/$USER/Desktop/wallpapers"
 mkdir -p "$WALLPAPERS_DIR"
 
 if [ -d "$DOTFILES_DIR/wallpapers" ]; then
-    cp -r "$DOTFILES_DIR/wallpapers"/* "$WALLPAPERS_DIR"
+    cp -r "$DOTFILES_DIR/wallpapers"/* "$WALLPAPERS_DIR/"
     success "Wallpapers copied to $WALLPAPERS_DIR"
 else
     warning "Wallpapers directory not found in dotfiles"
@@ -112,9 +112,9 @@ fi
 
 section "Creating Directory Structure"
 
-cd ~/Documents
-mkdir -p {htb_academy,htb_apps,htb_challenges,testing}
-success "Directory structure created in ~/Documents"
+cd "/home/$USER/Documents"
+mkdir -p htb_academy htb_apps htb_challenges testing
+success "Directory structure created in /home/$USER/Documents"
 
 # ---
 # BIN and ZSH Configuration
@@ -122,16 +122,20 @@ success "Directory structure created in ~/Documents"
 
 section "Configuring BIN and ZSH"
 
-cd ~
+cd "/home/$USER"
 if [ -d "$DOTFILES_DIR/bin" ]; then
-    mv "$DOTFILES_DIR/bin" .
+    if [ -d "/home/$USER/bin" ]; then
+        warning "Existing bin directory found, removing..."
+        rm -rf "/home/$USER/bin"
+    fi
+    mv "$DOTFILES_DIR/bin" "/home/$USER/"
     success "BIN directory configured"
 else
     warning "BIN directory not found in dotfiles"
 fi
 
 # Install Oh My Zsh if not installed
-if [ ! -d ~/.oh-my-zsh ]; then
+if [ ! -d "/home/$USER/.oh-my-zsh" ]; then
     info "Installing Oh My Zsh"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     success "Oh My Zsh installed"
@@ -140,30 +144,41 @@ else
 fi
 
 # ZSH plugins
-if [ -d ~/.oh-my-zsh/custom/plugins ]; then
+if [ -d "/home/$USER/.oh-my-zsh/custom/plugins" ]; then
     info "Installing ZSH plugins"
-    cd ~/.oh-my-zsh/custom/plugins
+    cd "/home/$USER/.oh-my-zsh/custom/plugins"
     [ ! -d "zsh-autosuggestions" ] && git clone https://github.com/zsh-users/zsh-autosuggestions.git
     [ ! -d "zsh-syntax-highlighting" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
     success "ZSH plugins installed"
 fi
 
 # Powerlevel10k theme
-if [ -d ~/.oh-my-zsh ]; then
+if [ -d "/home/$USER/.oh-my-zsh" ]; then
     info "Installing Powerlevel10k theme"
-    cd ~/.oh-my-zsh
+    cd "/home/$USER/.oh-my-zsh"
     [ ! -d "powerlevel10k" ] && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git powerlevel10k
     success "Powerlevel10k theme installed"
+fi
+
+# Copy zshrc configuration
+if [ -f "$DOTFILES_DIR/zshrc" ]; then
+    cp "$DOTFILES_DIR/zshrc" "/home/$USER/.zshrc"
+    success "ZSH configuration applied"
+else
+    warning "zshrc file not found in dotfiles"
 fi
 
 # Root user styling (zshrc and micro)
 info "Configuring style for root user"
 if [ -d "$DOTFILES_DIR" ]; then
     sudo mkdir -p /root/.config/micro/colorschemes 2>/dev/null || true
-    sudo cp "$DOTFILES_DIR/zshrc" /root/.zshrc 2>/dev/null || true
     
-    if [ -f "$DOTFILES_DIR/micro_theme.micro" ]; then
-        sudo cp "$DOTFILES_DIR/micro_theme.micro" /root/.config/micro/colorschemes/micro_theme.micro 2>/dev/null || true
+    if [ -f "$DOTFILES_DIR/zshrc" ]; then
+        sudo cp "$DOTFILES_DIR/zshrc" /root/.zshrc 2>/dev/null || true
+    fi
+    
+    if [ -f "$DOTFILES_DIR/colorschemas/micro_theme.micro" ]; then
+        sudo cp "$DOTFILES_DIR/colorschemas/micro_theme.micro" /root/.config/micro/colorschemes/micro_theme.micro 2>/dev/null || true
     fi
     
     success "Root user configuration applied"
@@ -180,89 +195,85 @@ section "Applying Appearance Configuration"
 cd "$DOTFILES_DIR"
 
 # GTK Theme (mantinight)
-THEMES_DIR=~/.themes
+THEMES_DIR="/home/$USER/.themes"
 mkdir -p "$THEMES_DIR"
 
-if [ -f "mantinight.tar" ]; then
+if [ -f "$DOTFILES_DIR/themes/mantinight.tar" ]; then
     info "Extracting mantinight theme"
-    [ -d "mantinight" ] && rm -rf mantinight
-    tar -xf mantinight.tar
-    mv mantinight "$THEMES_DIR/mantinight"
+    [ -d "$THEMES_DIR/mantinight" ] && rm -rf "$THEMES_DIR/mantinight"
+    tar -xf "$DOTFILES_DIR/themes/mantinight.tar" -C "$THEMES_DIR"
     success "Mantinight theme installed"
-    rm -f mantinight.tar
 else
     warning "Mantinight theme archive not found"
 fi
 
 # GTK Theme (darksun)
-if [ -f "darksun.tar" ]; then
+if [ -f "$DOTFILES_DIR/themes/darksun.tar" ]; then
     info "Extracting darksun theme"
-    [ -d "darksun" ] && rm -rf darksun
-    tar -xf darksun.tar
-    mv darksun "$THEMES_DIR/darksun"
+    [ -d "$THEMES_DIR/darksun" ] && rm -rf "$THEMES_DIR/darksun"
+    tar -xf "$DOTFILES_DIR/themes/darksun.tar" -C "$THEMES_DIR"
     success "Darksun theme installed"
-    rm -rf darksun.tar
 else
     warning "Darksun theme archive not found"
 fi
 
 # Micro editor configuration
-MICRO_COLOR_DIR=~/.config/micro/colorschemes
+MICRO_COLOR_DIR="/home/$USER/.config/micro/colorschemes"
 mkdir -p "$MICRO_COLOR_DIR"
 
-if [ -f "micro_theme.micro" ]; then
-    cp micro_theme.micro "$MICRO_COLOR_DIR/"
+if [ -f "$DOTFILES_DIR/colorschemas/micro_theme.micro" ]; then
+    cp "$DOTFILES_DIR/colorschemas/micro_theme.micro" "$MICRO_COLOR_DIR/"
     success "Micro theme configured"
 else
     warning "Micro theme file not found"
 fi
 
 # Kitty terminal configuration
-KITTY_DIR=~/.config/kitty
+KITTY_DIR="/home/$USER/.config/kitty"
 mkdir -p "$KITTY_DIR"
 
-if [ -f "kitty.conf" ]; then
-    cp kitty.conf "$KITTY_DIR/kitty.conf"
+if [ -f "$DOTFILES_DIR/colorschemas/kitty.conf" ]; then
+    cp "$DOTFILES_DIR/colorschemas/kitty.conf" "$KITTY_DIR/kitty.conf"
     success "Kitty terminal configured"
 else
     warning "Kitty configuration file not found"
 fi
 
 # Rofi configuration
-if [ -f "rofi_theme.rasi" ]; then
-    sudo cp -f rofi_theme.rasi /usr/share/rofi/themes/rofi_theme.rasi 2>/dev/null || true
+if [ -f "$DOTFILES_DIR/themes/rofi_theme.rasi" ]; then
+    sudo cp -f "$DOTFILES_DIR/themes/rofi_theme.rasi" /usr/share/rofi/themes/rofi_theme.rasi 2>/dev/null || true
     success "Rofi theme configured"
 else
     warning "Rofi theme file not found"
 fi
 
 # XFCE configuration files
-XFCE_CONFIG_DIR=~/.config/xfce4/xfconf/xfce-perchannel-xml
+XFCE_CONFIG_DIR="/home/$USER/.config/xfce4/xfconf/xfce-perchannel-xml"
 mkdir -p "$XFCE_CONFIG_DIR"
 
-if [ -f "xfce4-keyboard-shortcuts.xml" ]; then
-    cp xfce4-keyboard-shortcuts.xml "$XFCE_CONFIG_DIR/"
+if [ -f "$DOTFILES_DIR/xfce/xfce4-keyboard-shortcuts.xml" ]; then
+    cp "$DOTFILES_DIR/xfce/xfce4-keyboard-shortcuts.xml" "$XFCE_CONFIG_DIR/"
     success "XFCE keyboard shortcuts configured"
 else
     warning "XFCE keyboard shortcuts file not found"
 fi
 
-if [ -f "xfce4-power-manager.xml" ]; then
-    cp xfce4-power-manager.xml "$XFCE_CONFIG_DIR/"
+if [ -f "$DOTFILES_DIR/xfce/xfce4-power-manager.xml" ]; then
+    cp "$DOTFILES_DIR/xfce/xfce4-power-manager.xml" "$XFCE_CONFIG_DIR/"
     success "XFCE power manager configured"
 else
     warning "XFCE power manager file not found"
 fi
 
-if [ -f "xfce4Settings.xml" ]; then
-    cp xfce4Settings.xml "$XFCE_CONFIG_DIR/"
+if [ -f "$DOTFILES_DIR/xfce/xfce4Settings.xml" ]; then
+    cp "$DOTFILES_DIR/xfce/xfce4Settings.xml" "$XFCE_CONFIG_DIR/"
     success "XFCE settings configured"
 else
     warning "XFCE settings file not found"
 fi
 
 # GTK configuration
-GTK_CONFIG_DIR=~/.config/gtk-3.0
+GTK_CONFIG_DIR="/home/$USER/.config/gtk-3.0"
 mkdir -p "$GTK_CONFIG_DIR"
 
 cat > "$GTK_CONFIG_DIR/settings.ini" << 'EOF_GTK'
@@ -281,9 +292,9 @@ if [ -d "$THEMES_DIR" ]; then
     success "Themes copied to root"
 fi
 
-if [ -d ~/.icons ]; then
+if [ -d "/home/$USER/.icons" ]; then
     sudo mkdir -p /root/.icons
-    sudo cp -r ~/.icons/* /root/.icons/ 2>/dev/null || true
+    sudo cp -r "/home/$USER/.icons"/* /root/.icons/ 2>/dev/null || true
     success "Icons copied to root"
 fi
 
@@ -299,14 +310,14 @@ fi
 
 section "Installing JetBrains Mono Fonts"
 
-cd ~/Desktop
-FONT_INSTALL_DIR=jetbrains
+cd "/home/$USER/Desktop"
+FONT_INSTALL_DIR="jetbrains"
 mkdir -p "$FONT_INSTALL_DIR" && cd "$FONT_INSTALL_DIR"
-FONT_ZIP=$(ls ~/Downloads/JetBrainsMono*.zip 2>/dev/null | head -n 1)
+FONT_ZIP="/home/$USER/Downloads/JetBrainsMono*.zip"
 
-if [ -f "$FONT_ZIP" ]; then
+if ls $FONT_ZIP 1> /dev/null 2>&1; then
     info "Unzipping and installing JetBrains Mono"
-    unzip -o "$FONT_ZIP"
+    unzip -o "/home/$USER/Downloads/JetBrainsMono*.zip"
     sudo mkdir -p /usr/share/fonts/truetype/jetbrains-mono
     sudo mv fonts/ttf/* /usr/share/fonts/truetype/jetbrains-mono/ 2>/dev/null || true
     
@@ -317,31 +328,27 @@ if [ -f "$FONT_ZIP" ]; then
         success "JetBrains Mono fonts installed (font cache not updated)"
     fi
 else
-    warning "Could not find JetBrainsMono*.zip file in ~/Downloads. Skipping font install."
+    warning "Could not find JetBrainsMono*.zip file in /home/$USER/Downloads. Skipping font install."
 fi
 
 # Cleanup
-cd ~/Desktop
+cd "/home/$USER/Desktop"
 [ -d "$FONT_INSTALL_DIR" ] && rm -rf "$FONT_INSTALL_DIR"
 info "Font installation cleanup completed"
 
 # ---
-# Execute Template Creation Script
+# Execute Tools Script
 # ---
 
-section "Executing Template Creation Script"
+section "Installing Tools"
 
-TEMPLATE_SCRIPT=create_templates.sh
-TEMPLATE_PATH=~/$TEMPLATE_SCRIPT
-
-if [ -f "$TEMPLATE_PATH" ]; then
-    info "Found template script, executing..."
-    chmod +x "$TEMPLATE_PATH"
-    "$TEMPLATE_PATH"
-    success "Template creation script executed"
+if [ -f "$DOTFILES_DIR/shells/tools.sh" ]; then
+    info "Found tools installation script, executing..."
+    chmod +x "$DOTFILES_DIR/shells/tools.sh"
+    "$DOTFILES_DIR/shells/tools.sh"
+    success "Tools installation script executed"
 else
-    error "$TEMPLATE_SCRIPT not found at $TEMPLATE_PATH. Skipping template creation."
-    info "Please ensure the secondary script is created and placed in ~/"
+    warning "Tools script not found in $DOTFILES_DIR/shells/"
 fi
 
 # ---
@@ -350,5 +357,5 @@ fi
 
 success "All configurations applied successfully!"
 info "Please run the following command to apply ZSH configuration:"
-echo -e "  source ~/.zshrc"
+echo -e "  source /home/$USER/.zshrc"
 echo -e "System configuration complete"
