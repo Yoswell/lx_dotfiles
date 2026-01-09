@@ -17,13 +17,14 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Paths
-export PATH=~/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+export PATH=~/.local/bin:/snap/bin:/usr/sandbox/:/home/kali/.local/share/gem/ruby/3.3.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:$PATH
 export PATH="$HOME/bin/:$PATH"
 export ZSH=$HOME/.oh-my-zsh
 
 # Themas oh-my-zsh
 # ZSH_THEME="evan"
 # ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_COLORIZE_STYLE="colorful"
 
 # Functions
 function hexd() { echo "$@" | xxd -p -r }
@@ -50,7 +51,7 @@ alias vdir='vdir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias bat='batcat --theme="zenburn" -l ruby'
+alias bat='batcat --theme="base16" -l c'
 alias stopVpn='sudo killall openvpn'
 alias rmall='sudo rm -r'
 
@@ -58,13 +59,16 @@ alias rmall='sudo rm -r'
 plugins=(
     zsh-syntax-highlighting
     zsh-autosuggestions
+    zsh_tshark_autocomplete
+    colorize
+    git
 )
 
 source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-if [ -f /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]; then
-    source /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+if [ -f /usr/share/zsh-autocomplete/zsh_tshark_autocomplete.plugin.zsh ]; then
+    source /usr/share/zsh-autocomplete/zsh_tshark_autocomplete.plugin.zsh
     zstyle ':autocomplete:tab:*' insert-unambiguous yes
     zstyle ':autocomplete:tab:*' widget-style menu-select
     zstyle ':autocomplete:*' min-input 1000
