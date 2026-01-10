@@ -1,6 +1,3 @@
-# Rofi app launcher custom colorschema
-#   sudo cp rofi_theme /usr/share/rofi/themes
-
 configuration {
     show-icons: true;
 }

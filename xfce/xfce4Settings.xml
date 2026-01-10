@@ -22,8 +22,8 @@
   <property name="Gtk" type="empty">
     <property name="CursorThemeName" type="string" value="Future-dark-cursors"/>
     <property name="CursorThemeSize" type="int" value="20"/>
-    <property name="FontName" type="string" value="Cantarell 10"/>
-    <property name="MonospaceFontName" type="string" value="Fira Code Medium 9"/>
+    <property name="FontName" type="string" value="Liberation Sans Regular 10"/>
+    <property name="MonospaceFontName" type="string" value="JetBrains Mono Medium 9"/>
     <property name="ButtonImages" type="bool" value="true"/>
     <property name="MenuImages" type="bool" value="false"/>
     <property name="DecorationLayout" type="string" value="icon,menu:minimize,maximize,close"/>
