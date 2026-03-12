@@ -1,5 +1,3 @@
-/*/ Code custom vscode_config.json configuration /*/
-
 {
     "editor.minimap.enabled": false,
     "editor.fontFamily": "JetBrains Mono SemiBold",
