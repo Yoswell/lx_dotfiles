@@ -27,12 +27,29 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_COLORIZE_STYLE="colorful"
 
 # Functions
-function hexd() { echo "$@" | xxd -p -r }
-function b64() { echo "$@" | base64 -d }
-function mkt() { mkdir {content,nmap,credentials,exploits} }
-function py() { python3 -c "$@" }
-function getDate() { date -d "$(wget --method=HEAD -qSO- --max-redirect=0 $@ 2>&1 | sed -n 's/^ *Date: *//p')" "+%Y-%m-%d %H:%M:%S" }
-function getPorts() { echo "$@" | awk -F '/' '{print $1}' | sed -z 's/\n/,/g' }
+function hexd() { 
+    echo "$@" | xxd -p -r
+}
+
+function b64() { 
+    echo "$@" | base64 -d
+}
+
+function mkt() { 
+    mkdir {content,nmap,credentials,exploits} 
+}
+
+function py() { 
+    python3 -c "$@"
+}
+
+function getDate() { 
+    date -d "$(wget --method=HEAD -qSO- --max-redirect=0 $@ 2>&1 | sed -n 's/^ *Date: *//p')" "+%Y-%m-%d %H:%M:%S"
+}
+
+function getPorts() { 
+    echo "$@" | awk -F '/' '{print $1}' | sed -z 's/\n/,/g'
+}
 
 function reload() {
     sudo apt autoremove
