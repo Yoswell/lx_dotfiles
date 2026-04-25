@@ -34,14 +34,14 @@ APT_TOOLS=(
     "rlwrap" "remmina" "caido" "stegseek" "pngcheck" "sqlitebrowser" "cmake" "ghidra" "checksec" "stegsnow" "lxappearance" "rofi" 
     "kitty" "bloodyad" "certipy-ad" "python3-impacket" "impacket-scripts" "ranger" "flatpak" 
     "mono-devel" "wine" "wine64" "feroxbuster" "powershell" "gdb-peda" "wget" "gpg" "curl" "bat" "fd-find" "fzf" "ripgrep" 
-    "jq" "yq" "hexyl" "ncdu" "html2text" "binwalk" "exiftool" "foremost" "sleuthkit" "volatility" "wireshark" "tshark" 
-    "tcpdump" "nmap" "nikto" "gobuster" "ffuf" "seclists" "wordlists" "radare2" "strace" "ltrace" "neofetch" "htop" 
+    "jq" "yq" "ncdu" "html2text" "binwalk" "exiftool" "foremost" "sleuthkit" "wireshark" "tshark" 
+    "tcpdump" "nmap" "nikto" "gobuster" "ffuf" "seclists" "wordlists" "radare2" "strace" "ltrace" "htop" 
     "tree" "libboost-all-dev" "polybar"
 )
 
 # Python pip packages
 PIP_TOOLS=(
-    "oletools" "stego-lsb" "pwntools" "pycryptodome" "decompyle3" "decompyle6" "ropper" "pypykatz" "stegpy" "defaultcreds-cheat-sheet" 
+    "oletools" "stego-lsb" "pwntools" "pycryptodome" "decompyle3" "ropper" "pypykatz" "stegpy" "defaultcreds-cheat-sheet" 
     "kerbrute" "stegoveritas" "angr" "capstone" "unicorn" "keystone-engine" "stegcracker" "xortool" "droopescan"
 )
 
