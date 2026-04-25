@@ -32,7 +32,7 @@ section() {
 # APT packages
 APT_TOOLS=(
     "rlwrap" "remmina" "caido" "stegseek" "pngcheck" "sqlitebrowser" "cmake" "ghidra" "checksec" "stegsnow" "lxappearance" "rofi" 
-    "kitty" "apt-transport-https" "windsurf" "bloodyad" "certipy-ad" "python3-impacket" "impacket-scripts" "ranger" "flatpak" 
+    "kitty" "bloodyad" "certipy-ad" "python3-impacket" "impacket-scripts" "ranger" "flatpak" 
     "mono-devel" "wine" "wine64" "feroxbuster" "powershell" "gdb-peda" "wget" "gpg" "curl" "bat" "fd-find" "fzf" "ripgrep" 
     "jq" "yq" "hexyl" "ncdu" "html2text" "binwalk" "exiftool" "foremost" "sleuthkit" "volatility" "wireshark" "tshark" 
     "tcpdump" "nmap" "nikto" "gobuster" "ffuf" "seclists" "wordlists" "radare2" "strace" "ltrace" "neofetch" "htop" 
