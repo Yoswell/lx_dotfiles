@@ -68,12 +68,9 @@ setupWallpapers() {
     cp -rf wallpapers ~/Desktop/
     
     # Set wallpapers (verificar si existen los directorios)
-    if [ -d /usr/share/backgrounds/kali ]; then
-        sudo cp -f wallpapers/xcyberpunk.png /usr/share/backgrounds/kali/kali-maze-16x9.jpg
-        sudo cp -f wallpapers/xcyberpunk.png /usr/share/backgrounds/kali/login.svg
-    else
-        warning "Kali backgrounds directory not found, skipping wallpaper setup"
-    fi
+    sudo cp -f wallpapers/xcyberpunk.jpg /usr/share/backgrounds/kali/kali-cubes-16x9.jpg
+    sudo cp -f wallpapers/xcyberpunk.jpg /usr/share/backgrounds/kali/kali-cubes2-16x9.jpg
+    sudo cp -f wallpapers/xcyberpunk.jpg /usr/share/backgrounds/kali/login.svg
 }
 
 # Creating directories

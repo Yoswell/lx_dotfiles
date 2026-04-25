@@ -82,6 +82,26 @@ install_pip_tools() {
     deactivate
 }
 
+# Function to install Micro editor with plugins
+install_micro_editor() {
+    section "Installing Micro Editor"
+    
+    # Install Micro editor (force reinstall)
+    info "Installing/Updating Micro editor..."
+    curl -s https://getmic.ro | bash
+    sudo mv -f micro /usr/bin/ 2>/dev/null || sudo cp micro /usr/bin/
+    success "Micro editor installed/updated"
+    
+    # Install Micro plugins (force reinstall)
+    info "Installing/Updating Micro plugins..."
+    for plugin in "${MICRO_PLUGINS[@]}"; do
+        info "Installing plugin: $plugin"
+        micro -plugin install "$plugin" || micro -plugin update "$plugin"
+    done
+    
+    success "Micro plugins installation completed"
+}
+
 # Main installation function
 main() {
     if [ "$EUID" -eq 0 ]; then 
@@ -100,6 +120,7 @@ main() {
     # Installation sequence
     install_apt_tools
     install_pip_tools
+    install_micro_editor
     
     # Completion message
     section "Installation Complete"
