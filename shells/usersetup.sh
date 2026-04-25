@@ -143,6 +143,8 @@ setupUserThemes() {
     cp -f xfce/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
     cp -f xfce/xfce4-power-manager.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
     cp -f xfce/xfce4Settings.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
+    cp -f xfce/xfce4-desktop.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
+    cp -f xfce/thunar.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 }
 
 # Installing valuable fonts
