@@ -166,7 +166,7 @@ runToolsScript() {
 }
 
 main() {
-    if [ "$EUID" -eq 0 ]; then 
+    if [ "$EUID" -eq 0 ]; then
         warning "Do not run as root"
         exit 1
     fi

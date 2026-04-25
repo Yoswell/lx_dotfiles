@@ -1,6 +1,6 @@
 {
     "editor.minimap.enabled": false,
-    "editor.fontFamily": "JetBrains Mono Semibold",
+    "editor.fontFamily": "JetBrains Mono SemiBold",
     "editor.overviewRulerBorder": false,
     "workbench.colorCustomizations": {},
     "editor.hover.enabled": "off",
@@ -53,6 +53,7 @@
     "workbench.iconTheme": "let-icons",
     "workbench.colorTheme": "Onyx Theme Color & Experience",
     "workbench.activityBar.location": "top",
-    "editor.fontSize": 13,
-    "window.zoomLevel": -0.5
+    "window.zoomLevel": -0.5,
+    "editor.fontSize": 15,
+    "editor.indentSize": "tabSize"
 }
