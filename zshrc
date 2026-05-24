@@ -61,8 +61,8 @@ function getDate() {
   date -d "$(wget --method=HEAD -qSO- --max-redirect=0 $@ 2>&1 | sed -n 's/^ *Date: *//p')" "+%Y-%m-%d %H:%M:%S"
 }
 
-function getPorts() { 
-  echo "$@" | awk -F '/' '{print $1}' | sed -z 's/\n/,/g'
+function getPorts() {
+  awk -F '/' '/\/tcp/ {print $1}' | paste -sd,
 }
 
 function reload() {
