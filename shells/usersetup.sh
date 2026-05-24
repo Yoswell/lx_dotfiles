@@ -11,7 +11,7 @@ uninstallPackages() {
 
   # Remove snaps
   sudo snap remove autopsy 2>/dev/null
-  
+
   sudo apt autoremove -y
 
   sudo gunzip /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
